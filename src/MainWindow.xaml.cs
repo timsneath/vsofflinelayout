@@ -26,12 +26,18 @@ namespace Microsoft.VisualStudio.Setup.Samples.OfflineLayout
         {
             var cmd = new StringBuilder("vs_community.exe");
 
-            cmd.Append(" --");
+            cmd.Append($" --layout {LayoutFolder.Text} ");
 
-            foreach (Workload item in WorkloadsControl.SelectedItems)
+            foreach (Workload workload in WorkloadsControl.SelectedItems)
             {
-                cmd.Append($"--add " + item.ID + " ");
+                cmd.Append($"--add {workload.ID} ");
             }
+
+            foreach(Language language in LanguageControl.SelectedItems)
+            {
+                cmd.Append($"--lang {language.ID} ");
+            }
+
             MessageBox.Show(cmd.ToString());
         }
 
