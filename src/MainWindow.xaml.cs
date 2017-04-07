@@ -13,16 +13,39 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace vsofflinelayout
+namespace Microsoft.VisualStudio.Setup.Samples.OfflineLayout
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var cmd = new StringBuilder("vs_community.exe");
+
+            cmd.Append(" --");
+
+            foreach (Workload item in WorkloadsControl.SelectedItems)
+            {
+                cmd.Append($"--add " + item.ID + " ");
+            }
+            MessageBox.Show(cmd.ToString());
+        }
+
+        private void FolderOpenButton(object sender, RoutedEventArgs e)
+        {
+            var folderDialog = new Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog();
+
+            folderDialog.Title = "Select layout folder";
+            folderDialog.IsFolderPicker = true;
+            folderDialog.EnsurePathExists = true;
+            if (folderDialog.ShowDialog() == WindowsAPICodePack.Dialogs.CommonFileDialogResult.Ok)
+            {
+                LayoutFolder.Text = folderDialog.FileName;
+            }
         }
     }
 }

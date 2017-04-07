@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace vsofflinelayout
+namespace Microsoft.VisualStudio.Setup.Samples.OfflineLayout
 {
     public class Language
     {
