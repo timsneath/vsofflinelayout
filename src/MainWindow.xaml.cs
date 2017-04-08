@@ -22,7 +22,7 @@ namespace Microsoft.VisualStudio.Setup.Samples.OfflineLayout
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void CreateLayoutButton_Click(object sender, RoutedEventArgs e)
         {
             var cmd = new StringBuilder("vs_community.exe");
 
@@ -33,7 +33,17 @@ namespace Microsoft.VisualStudio.Setup.Samples.OfflineLayout
                 cmd.Append($"--add {workload.ID} ");
             }
 
-            foreach(Language language in LanguageControl.SelectedItems)
+            if (RecommendedRadioButton.IsChecked == true)
+            {
+                cmd.Append("--includeRecommended ");
+            }
+
+            if (OptionalRadioButton.IsChecked == true)
+            {
+                cmd.Append("--includeRecommended --includeOptional ");
+            }
+
+            foreach (Language language in LanguageControl.SelectedItems)
             {
                 cmd.Append($"--lang {language.ID} ");
             }

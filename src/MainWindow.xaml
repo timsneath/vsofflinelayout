@@ -40,9 +40,9 @@
 
             <GroupBox Header="What components would you like included?">
                 <UniformGrid Columns="3">
-                    <RadioButton Content="Only required"/>
-                    <RadioButton Content="Include recommended"/>
-                    <RadioButton Content="Include optional"/>
+                    <RadioButton x:Name="RequiredRadioButton" GroupName="Components" Content="Only minimal requirements"/>
+                    <RadioButton x:Name="RecommendedRadioButton" GroupName="Components" IsChecked="True" Content="Recommended"/>
+                    <RadioButton x:Name="OptionalRadioButton" GroupName="Components" Content="Recommended and optional"/>
                 </UniformGrid>
             </GroupBox>
 
@@ -69,7 +69,7 @@
             </GroupBox>
 
             <StackPanel>
-                <Button Content="Create Layout" Width="150" Height="30" Click="Button_Click" HorizontalAlignment="Right" />
+                <Button Content="Create Layout" Width="150" Height="30" Click="CreateLayoutButton_Click" HorizontalAlignment="Right" />
             </StackPanel>
         </StackPanel>
     </ScrollViewer>
