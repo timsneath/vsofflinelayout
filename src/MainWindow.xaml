@@ -6,58 +6,71 @@
     xmlns:local="clr-namespace:Microsoft.VisualStudio.Setup.Samples.OfflineLayout"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     x:Class="Microsoft.VisualStudio.Setup.Samples.OfflineLayout.MainWindow"
-        mc:Ignorable="d"
-        Title="Visual Studio 2017 Offline Install Creator" Height="481" Width="600">
+    mc:Ignorable="d"
+    Title="Visual Studio 2017 Offline Install Creator" 
+    MinWidth="400">
+    
     <Window.Resources>
         <local:Workloads x:Key="WorkloadData" />
         <local:Languages x:Key="LanguageData" />
-        <System:Double x:Key="HeadingFontSize">16</System:Double>
+        <Style x:Key="HeadingStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="#FF12A1F4"/>
+        </Style>
     </Window.Resources>
-    <StackPanel>
-        <TextBlock Foreground="{StaticResource Brush01}" FontSize="{StaticResource HeadingFontSize}">Build yourself an offline installer for Visual Studio 2017</TextBlock>
-        <GroupBox Header="What workloads would you like to install?">
-            <ListView x:Name="WorkloadsControl" ItemsSource="{Binding Source={StaticResource WorkloadData}}" SelectionMode="Multiple" >
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="2" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </GroupBox>
+    
+    <ScrollViewer>
+        <StackPanel Background="AliceBlue" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            
+            <TextBlock Style="{StaticResource ResourceKey=HeadingStyle}">Build yourself an offline installer for Visual Studio 2017</TextBlock>
+            <GroupBox Header="What workloads would you like to install?">
+                <ListView x:Name="WorkloadsControl" ItemsSource="{Binding Source={StaticResource WorkloadData}}" SelectionMode="Multiple" >
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </GroupBox>
 
-        <GroupBox Header="What components would you like included?">
-            <UniformGrid Columns="3">
-                <RadioButton Content="Only required"/>
-                <RadioButton Content="Include recommended"/>
-                <RadioButton Content="Include optional"/>
-            </UniformGrid>
-        </GroupBox>
+            <GroupBox Header="What components would you like included?">
+                <UniformGrid Columns="3">
+                    <RadioButton Content="Only required"/>
+                    <RadioButton Content="Include recommended"/>
+                    <RadioButton Content="Include optional"/>
+                </UniformGrid>
+            </GroupBox>
 
-        <GroupBox Header="What languages would you like to include?">
-            <ListView x:Name="LanguageControl" ItemsSource="{Binding Source={StaticResource LanguageData}}" SelectionMode="Multiple" >
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="2" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </GroupBox>
-        <GroupBox Header="Where do you want the layout created?">
-            <UniformGrid Columns="5">
-                <TextBox x:Name="LayoutFolder" Width="400" Grid.Column="0" Grid.ColumnSpan="4"/>
-                <Button Grid.Column="4" Click="FolderOpenButton" Content="Browse..."/>
-            </UniformGrid>
-        </GroupBox>
-        <Button Content="Create Layout" Width="150" Height="30" Click="Button_Click" Margin="0,0,221,0" HorizontalAlignment="Right" />
-    </StackPanel>
+            <GroupBox Header="What languages would you like to include?">
+                <ListView x:Name="LanguageControl" ItemsSource="{Binding Source={StaticResource LanguageData}}" SelectionMode="Multiple" >
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </GroupBox>
+            
+            <GroupBox Header="Where do you want the layout created?">
+                <DockPanel LastChildFill="True">
+                    <Button DockPanel.Dock="Right" Click="FolderOpenButton" Width="150" Content="Browse..."/>
+                    <TextBox x:Name="LayoutFolder" />
+                </DockPanel>
+            </GroupBox>
+
+            <StackPanel>
+                <Button Content="Create Layout" Width="150" Height="30" Click="Button_Click" HorizontalAlignment="Right" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </Window>
