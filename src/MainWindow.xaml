@@ -1,16 +1,20 @@
-﻿<Window x:Class="Microsoft.VisualStudio.Setup.Samples.OfflineLayout.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Microsoft.VisualStudio.Setup.Samples.OfflineLayout"
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Microsoft.VisualStudio.Setup.Samples.OfflineLayout"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    x:Class="Microsoft.VisualStudio.Setup.Samples.OfflineLayout.MainWindow"
         mc:Ignorable="d"
         Title="Visual Studio 2017 Offline Install Creator" Height="481" Width="600">
     <Window.Resources>
         <local:Workloads x:Key="WorkloadData" />
         <local:Languages x:Key="LanguageData" />
+        <System:Double x:Key="HeadingFontSize">16</System:Double>
     </Window.Resources>
     <StackPanel>
+        <TextBlock Foreground="{StaticResource Brush01}" FontSize="{StaticResource HeadingFontSize}">Build yourself an offline installer for Visual Studio 2017</TextBlock>
         <GroupBox Header="What workloads would you like to install?">
             <ListView x:Name="WorkloadsControl" ItemsSource="{Binding Source={StaticResource WorkloadData}}" SelectionMode="Multiple" >
                 <ListView.ItemsPanel>
@@ -20,7 +24,7 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Path=Name}" />
+                        <TextBlock Text="{Binding Name}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -28,9 +32,9 @@
 
         <GroupBox Header="What components would you like included?">
             <UniformGrid Columns="3">
-                <RadioButton>Only required</RadioButton>
-                <RadioButton>Include recommended</RadioButton>
-                <RadioButton>Include optional</RadioButton>
+                <RadioButton Content="Only required"/>
+                <RadioButton Content="Include recommended"/>
+                <RadioButton Content="Include optional"/>
             </UniformGrid>
         </GroupBox>
 
@@ -43,7 +47,7 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Path=Name}" />
+                        <TextBlock Text="{Binding Name}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -51,7 +55,7 @@
         <GroupBox Header="Where do you want the layout created?">
             <UniformGrid Columns="5">
                 <TextBox x:Name="LayoutFolder" Width="400" Grid.Column="0" Grid.ColumnSpan="4"/>
-                <Button Grid.Column="4" Click="FolderOpenButton">Browse...</Button>
+                <Button Grid.Column="4" Click="FolderOpenButton" Content="Browse..."/>
             </UniformGrid>
         </GroupBox>
         <Button Content="Create Layout" Width="150" Height="30" Click="Button_Click" Margin="0,0,221,0" HorizontalAlignment="Right" />
