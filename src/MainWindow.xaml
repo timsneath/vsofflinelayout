@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:Microsoft.VisualStudio.Setup.Samples.OfflineLayout"
-    xmlns:System="clr-namespace:System;assembly=mscorlib"
     x:Class="Microsoft.VisualStudio.Setup.Samples.OfflineLayout.MainWindow"
     mc:Ignorable="d"
     Title="Visual Studio 2017 Offline Install Creator" 
@@ -13,29 +12,50 @@
     <Window.Resources>
         <local:Workloads x:Key="WorkloadData" />
         <local:Languages x:Key="LanguageData" />
+        
         <Style x:Key="HeadingStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Foreground" Value="#FF12A1F4"/>
         </Style>
+        
+        <Style x:Key="ListViewTwoColumnStyle" TargetType="ListView">
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ListViewThreeColumnStyle" TargetType="ListView">
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CheckBoxListViewStyle" TargetType="ListViewItem">
+            <Setter Property="Focusable" Value="False" />
+        </Style>
+        <DataTemplate x:Key="CheckBoxCell">
+            <CheckBox Content="{Binding Name}" 
+                      IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}" />
+        </DataTemplate>
     </Window.Resources>
     
     <ScrollViewer>
         <StackPanel Background="AliceBlue" ScrollViewer.VerticalScrollBarVisibility="Auto">
             
             <TextBlock Style="{StaticResource ResourceKey=HeadingStyle}">Build yourself an offline installer for Visual Studio 2017</TextBlock>
-            <GroupBox Header="What workloads would you like to install?">
-                <ListView x:Name="WorkloadsControl" ItemsSource="{Binding Source={StaticResource WorkloadData}}" SelectionMode="Multiple" >
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="2" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+            <GroupBox Header="What workloads would you like to cache?">
+                <ListView x:Name="WorkloadsControl" 
+                          Style="{StaticResource ListViewTwoColumnStyle}"
+                          ItemsSource="{Binding Source={StaticResource WorkloadData}}" 
+                          ItemContainerStyle="{StaticResource CheckBoxListViewStyle}"
+                          ItemTemplate="{StaticResource CheckBoxCell}"
+                          SelectionMode="Multiple" />
             </GroupBox>
 
             <GroupBox Header="What components would you like included?">
@@ -47,24 +67,18 @@
             </GroupBox>
 
             <GroupBox Header="What languages would you like to include?">
-                <ListView x:Name="LanguageControl" ItemsSource="{Binding Source={StaticResource LanguageData}}" SelectionMode="Multiple" >
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="2" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <ListView x:Name="LanguageControl" 
+                          Style="{StaticResource ListViewThreeColumnStyle}"
+                          ItemsSource="{Binding Source={StaticResource LanguageData}}" 
+                          ItemContainerStyle="{StaticResource CheckBoxListViewStyle}"
+                          ItemTemplate="{StaticResource CheckBoxCell}"
+                          SelectionMode="Multiple" />
             </GroupBox>
             
             <GroupBox Header="Where do you want the layout created?">
                 <DockPanel LastChildFill="True">
-                    <Button DockPanel.Dock="Right" Click="FolderOpenButton" Width="150" Content="Browse..."/>
-                    <TextBox x:Name="LayoutFolder" />
+                    <Button DockPanel.Dock="Right" Click="FolderOpenButton" Width="150" Content="Browse..." />
+                    <TextBox x:Name="LayoutFolder" Text="C:\VS2017" />
                 </DockPanel>
             </GroupBox>
 
